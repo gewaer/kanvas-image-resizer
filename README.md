@@ -37,14 +37,15 @@ npm run inspect  #run with nodemon and debugger enabled
 ```
 
 query params
-Name | Type | Possible values | Required | Note |
---- | --- | --- | --- | --- 
-w (width) | __number__ | any number > 0 | __false__ |
-h (height) | __number__ | any number > 0 | __false__ |
-fit | __string__ | `cover | contain | fill | inside | outside` | __false__ | 
-position | __string__ | `top | right top | right | right bottom | bottom | left bottom | left | left top` | __false__ | fit = `cover` or `contain` default is `center`
-strategy | __string__ | `entropy | attention` | __false__ | only works with fit = `cover`
-gravity | __string__ | `north | northeast | east | southeast | south | southwest | west | northwest | center | centre` | __false__ 
+
+| Name | Type | Possible values | Required | Note |
+| --- | --- | --- | --- | --- 
+| w (width) | __number__ | any number > 0 | __false__ |
+| h (height) | __number__ | any number > 0 | __false__ |
+| fit | __string__ | `cover | contain | fill | inside | outside` | __false__ | 
+| position | __string__ | `top | right top | right | right bottom | bottom | left bottom | left | left top` | __false__ | fit = `cover` or `contain` default is `center`
+| strategy | __string__ | `entropy | attention` | __false__ | only works with fit = `cover`
+| gravity | __string__ | `north | northeast | east | southeast | south | southwest | west | northwest | center | centre` | __false__ 
 
 
 ### `GET -> /status` ( Used to get the service status)
