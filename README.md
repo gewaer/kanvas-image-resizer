@@ -32,6 +32,12 @@ npm run dev  #run with nodemon
 npm run inspect  #run with nodemon and debugger enabled
 ```
 
+# Example
+
+```
+http://localhost:3000/v1/image/rk4eRm.jpg?w=200
+```
+
 # Usage
 
 ### `GET -> /image/:image_name` ( resize image )
@@ -59,10 +65,6 @@ returns -> { "status": "ok" }
 ```
 
 
-# Example
 
-```
-http://localhost:3000/v1/image/rk4eRm.jpg?w=200
-```
 
 
