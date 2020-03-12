@@ -14,6 +14,11 @@ Make a copy from `.env_default` file and rename the file with `.env`,
 * `PORT` : this is the port the service will bind 
 * `AMAZON_S3_BUCKET` : this will be the url from your amazon S3 bucket
 
+install node modules
+```bash
+npm install
+```
+
 then you can run the service 
 ```bash
 npm start   #this will boot the service using pm2
@@ -51,6 +56,13 @@ query params
 ### `GET -> /status` ( Used to get the service status)
 ```
 returns -> { "status": "ok" }
+```
+
+
+# Example
+
+```
+http://localhost:3000/v1/image/rk4eRm.jpg?w=200
 ```
 
 
