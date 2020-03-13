@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+
+ kanvas-resize:
+   build: .
+   volumes:
+     - .:$HOME
+   tty: true
+   ports: 
+     - "3000:3000"
+   networks:
+     - local-network
+
+networks:
+  local-network:
+  public-network:
