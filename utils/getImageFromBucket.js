@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-const AMAZON_S3_BUCKET = process.env.AMAZON_S3_BUCKET || 'https://s3.amazonaws.com/mc-canvas/test';
+const AMAZON_S3_BUCKET = process.env.AMAZON_S3_BUCKET;
 const getImageFromBucket = async (name) => {
 
   if (!AMAZON_S3_BUCKET) throw new Error('No AMAZON_S3_BUCKET url provided');
