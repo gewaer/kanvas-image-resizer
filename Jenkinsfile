@@ -13,10 +13,10 @@ pipeline {
 	        }
 	    }
     
-    stage('Starting kanvas-image-resizer') {
-        steps {
-        sshagent(['kanvas-image']) {
-            sh 'ssh -tt kanvas-image docker-compose -f kanvas-image-resizer/docker-compose.yml up -d --build'
+       stage('Starting kanvas-image-resizer') {
+	    steps {
+                sshagent(['kanvas-image']) {
+                    sh 'ssh -tt kanvas-image docker-compose -f kanvas-image-resizer/docker-compose.yml up -d --build'
                 }
             }
         }
