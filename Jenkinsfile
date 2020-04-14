@@ -8,7 +8,7 @@ pipeline {
 	stage('Pulling kanvas-image-resizer') {
 	    steps {
 		sshagent(['kanvas-image']) {
-		    sh 'ssh -tt kanvas-image git pull ./kanvas-image-resizer/'
+		    sh 'ssh -tt kanvas-image git -C kanvas-image-resizer pull'
 		    }
 	        }
 	    }
