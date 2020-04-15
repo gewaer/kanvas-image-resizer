@@ -10,15 +10,6 @@ pipeline {
 	            sh 'rsync -avz /var/lib/jenkins/workspace/Kanvas-Image-Resizer/ kanvas-image:/home/ubuntu/kanvas-image-resizer/'
                } 
 	    }
-
-
-	stage('NPM Install') {
-	    steps {
-		sshagent(['kanvas-image']) {
-		    sh 'ssh -tt kanvas-image npm install --prefix kanvas-image-resizer'
-		    }
-	        }
-	    }
     
        stage('Starting kanvas-image-resizer') {
 	    steps {
