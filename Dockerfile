@@ -25,7 +25,7 @@ RUN npm install -g pm2@4.2.3
 RUN npm install
 
 #Expose port
-EXPOSE 3000
+EXPOSE 80
 
 #Run app
 CMD ["pm2-runtime", "index.js"]
