@@ -7,8 +7,15 @@ router.get('/', async (req, res) => {
   const { url = '' } = query;
   if (url) {
     if (URL_REGEX.test(url)) {
-      const info = await getWebSiteInfo(url);
-      res.json(info);
+      try {
+        const info = await getWebSiteInfo(url);
+        res.json(info);
+      }catch(e) {
+        res.status(500).json({
+          message: e.message
+        })
+      }
+     
     } else {
       res.status(401).json({
         message: 'Invalid url'
