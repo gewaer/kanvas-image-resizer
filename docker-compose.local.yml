@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+ resizer:
+   build: .
+   tty: true
+   ports:
+     - "80:80"
+   networks:
+     - local-network
+
+networks:
+  local-network:

@@ -8,7 +8,7 @@ const controllers = require('./controllers');
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 
 app.use('/v1', controllers);
 app.get('/status', (req, res) => res.json({ status: 'ok' }))
