@@ -42,8 +42,7 @@ const getWebSiteInfo = async (url) => {
 
       return response
   } catch (e) {
-    console.log(e);
-    return undefined;
+    throw new Error(e);
   }
 }
   return undefined;
