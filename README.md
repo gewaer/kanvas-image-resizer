@@ -1,5 +1,5 @@
 # kanvas-image-resizer
-Image processing service used to rezise images from Amazon S3 bucket dynamically
+Image processing service used to rezise images from Amazon S3 bucket dynamically.
 
 ### Requirements
 * Nodejs v10 or higher
