@@ -22,12 +22,13 @@ const getWebSiteInfo = async (url) => {
       const twitterUrl = $('meta[name="twitter:url"]').attr('content');
       const titleNode = $('title').text();
       const firstImgUrl = $('img').first().attr('src');
-      const parsedFirstImageUrl = URL.parse(firstImgUrl)
       let defaultImageUrl;
-
-      if (!parsedFirstImageUrl.host) {
-        defaultImageUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedFirstImageUrl.path}`
-      }    
+      if(firstImgUrl) {
+        const parsedFirstImageUrl = URL.parse(firstImgUrl)
+        if (!parsedFirstImageUrl.host) {
+          defaultImageUrl = `${parsedUrl.protocol}//${parsedUrl.host}${parsedFirstImageUrl.path}`
+        }    
+      }
 
       const response = {
         originalUrl: originalUrl || twitterUrl,
