@@ -10,7 +10,7 @@ pipeline {
     stages {
 	stage('Transfering Files') {
 	    steps {
-	            sh 'rsync -avz /var/lib/jenkins/workspace/Kanvas-Image-Resizer/ kanvas-image:/home/ubuntu/kanvas-image-resizer/'
+	            sh 'rsync -avz /var/lib/jenkins/workspace/memod-resizer_master/ kanvas-image:/home/ubuntu/kanvas-image-resizer/'
                } 
 	    }
     
