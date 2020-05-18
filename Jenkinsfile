@@ -9,8 +9,8 @@ pipeline {
 
     stages {
 	stage('Deliver to Production') {
-        when {
-            branh 'master'
+            when {
+                 branch 'master'
         }
         
 	    steps {
