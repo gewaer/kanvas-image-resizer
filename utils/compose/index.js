@@ -2,12 +2,6 @@ const { createCanvas, loadImage } = require('canvas');
 const sharp = require('sharp');
 const AMAZON_S3_BUCKET = process.env.AMAZON_S3_BUCKET;
 
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
-
 
 const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#262628') => {
   return new Promise(async (resolve, reject) => {
