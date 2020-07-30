@@ -1,7 +1,6 @@
 const { createCanvas, loadImage } = require('canvas');
 const sharp = require('sharp');
 const AMAZON_S3_BUCKET = process.env.AMAZON_S3_BUCKET;
-const drawMultilineText = require('canvas-multiline-text');
 
 const GAP = 10;
 
@@ -81,7 +80,13 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
             }
             wrapText(context, text, x, y, perImageWidth - 25, 40)
           }
-          cellX = perImageWidth * (index + 1) + GAP;
+          
+          cellX = perImageWidth * (index + 1);
+          if (index < imgs.length - 1 ) {
+            context.fillStyle = '#232324';
+            context.fillRect(cellX, 0, GAP, height);
+            cellX += GAP;
+          }
         }
    
         const buffer = canvas.toBuffer("image/jpeg");
