@@ -62,7 +62,8 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
           let y = 0;
   
           if (img) {
-            const imageUrl = `${AMAZON_S3_BUCKET}${img}`;
+            const path = img[0] === '/' ? img : `/${img}`;
+            const imageUrl = `${AMAZON_S3_BUCKET}${path}`;
             const image = await loadImage(imageUrl);
             // const editImage = await sharp(image)
             // console.log(editImage);
