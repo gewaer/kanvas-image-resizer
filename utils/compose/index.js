@@ -45,8 +45,17 @@ const calculateWrappedTextHeight = (context, text, y, maxWidth, lineHeight) => {
   
 }
 
+const capital = (text) => (
+  `${text[0].toUpperCase()}${text.slice(1)}`
+);
+
+
+
 const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#262628') => {
   return new Promise(async (resolve, reject) => {
+
+   
+
     if (Array.isArray(imgs) && Array.isArray(alts) ) {
       if (imgs.length === alts.length) {
         const perImageWidth = width / imgs.length;
@@ -55,6 +64,21 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
         context.fillStyle = backgroundColor;
         context.fillRect(0,0, width, height);
         let cellX = 0;
+
+        const writeText = (alt) => {
+          const text = capital(alt.replace(/\-/g,' '));
+          context.font = "bold 25pt Menlo";
+          context.textAlign = 'left';
+          context.fillStyle = '#fff';
+          const textHeight = calculateWrappedTextHeight(context, text, 0, perImageWidth, 40)
+          let x = (cellX + GAP);
+          let y = (height / 2) - (textHeight / 2)
+          if (textHeight >= 200) {
+            text += '...'
+          }
+          wrapText(context, text, x, y, perImageWidth - 25, 40)
+        }
+
         for(let index = 0; index <= imgs.length - 1; index++) {
           const img = imgs[index];
          
@@ -64,22 +88,28 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
           if (img) {
             const path = img[0] === '/' ? img : `/${img}`;
             const imageUrl = `${AMAZON_S3_BUCKET}${path}`;
-            const image = await loadImage(imageUrl);
+            try {
+              const image = await loadImage(imageUrl);
+              context.drawImage(image, cellX, y, perImageWidth, height)
+
+            } catch (e) {
+              writeText(alts[index])
+            }
             // const editImage = await sharp(image)
             // console.log(editImage);
-            context.drawImage(image, cellX, y, perImageWidth, height)
           } else {
-            const text = alts[index];
-            context.font = "bold 25pt Menlo";
-            context.textAlign = 'left';
-            context.fillStyle = '#fff';
-            const textHeight = calculateWrappedTextHeight(context, text, y, perImageWidth, 40)
-            x = (cellX + GAP);
-            y = (height / 2) - (textHeight / 2)
-            if (textHeight >= 200) {
-              text += '...'
-            }
-            wrapText(context, text, x, y, perImageWidth - 25, 40)
+            writeText(alts[index])
+            // const text = capitalize(alts[index].replace(/\-/g,' '));
+            // context.font = "bold 25pt Menlo";
+            // context.textAlign = 'left';
+            // context.fillStyle = '#fff';
+            // const textHeight = calculateWrappedTextHeight(context, text, y, perImageWidth, 40)
+            // x = (cellX + GAP);
+            // y = (height / 2) - (textHeight / 2)
+            // if (textHeight >= 200) {
+            //   text += '...'
+            // }
+            // wrapText(context, text, x, y, perImageWidth - 25, 40)
           }
           
           cellX = perImageWidth * (index + 1);
