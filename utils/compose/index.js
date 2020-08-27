@@ -87,7 +87,8 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
   
           if (img) {
             const path = img[0] === '/' ? img : `/${img}`;
-            const imageUrl = `${AMAZON_S3_BUCKET}${path}`;
+            const cleanPath = path.replace(/\/\//g, '/')
+            const imageUrl = `${AMAZON_S3_BUCKET}${cleanPath}`;
             try {
               const image = await loadImage(imageUrl);
               context.drawImage(image, cellX, y, perImageWidth, height)
