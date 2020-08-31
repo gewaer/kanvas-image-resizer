@@ -1,6 +1,8 @@
 const { createCanvas, loadImage } = require('canvas');
 const sharp = require('sharp');
 const AMAZON_S3_BUCKET = process.env.AMAZON_S3_BUCKET;
+const getImageFromBucket = require('../getImageFromBucket');
+const tempy = require('tempy');
 
 const GAP = 10;
 
@@ -86,11 +88,18 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
           let y = 0;
   
           if (img) {
-            const path = img[0] === '/' ? img : `/${img}`;
+            const tempFile = tempy.file();
+            const path = img[0] === '/' ? img.substring(1, img.length) : img;
             const cleanPath = path.replace(/\/\//g, '/')
-            const imageUrl = `${AMAZON_S3_BUCKET}${cleanPath}`;
+            // const imageUrl = `${AMAZON_S3_BUCKET}${cleanPath}`;
             try {
-              const image = await loadImage(imageUrl);
+              const imageBuffer = await getImageFromBucket(cleanPath);
+              await sharp(imageBuffer).resize({
+                width: parseInt(perImageWidth),
+                height,
+                fit: 'contain'
+              }).toFile(tempFile)
+              const image = await loadImage(tempFile);
               context.drawImage(image, cellX, y, perImageWidth, height)
 
             } catch (e) {
