@@ -97,7 +97,7 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
               await sharp(imageBuffer).resize({
                 width: parseInt(perImageWidth),
                 height,
-                fit: 'contain',
+                fit: 'cover',
                 background: backgroundColor,
               }).toFile(tempFile)
               const image = await loadImage(tempFile);
