@@ -97,7 +97,8 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
               await sharp(imageBuffer).resize({
                 width: parseInt(perImageWidth),
                 height,
-                fit: 'contain'
+                fit: 'contain',
+                background: backgroundColor,
               }).toFile(tempFile)
               const image = await loadImage(tempFile);
               context.drawImage(image, cellX, y, perImageWidth, height)
