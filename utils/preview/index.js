@@ -8,7 +8,7 @@ const getWebSiteInfo = async (url) => {
       const parsedUrl = URL.parse(url);
       if (!parsedUrl.protocol) requestUrl = `http://${requestUrl}`
       
-      const { data } = await axios.get(requestUrl)
+      const { data } = await axios.get(requestUrl, { headers: { 'User-Agent' : 'memod-link-preview-googlebot' } })
       const $ = cheerio.load(data);
       const image = $('meta[property="og:image"]').attr('content');
       const originalUrl = $('meta[property="og:url"]').attr('content');
