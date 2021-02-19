@@ -8,7 +8,6 @@ Image processing service used to rezise images from Amazon S3 bucket dynamically
 
 
 # Setup
-
 Make a copy from `.env_default` file and rename the file with `.env`,
 * `PORT` : this is the port the service will bind 
 * `AMAZON_S3_BUCKET` : this will be the url from your amazon S3 bucket
