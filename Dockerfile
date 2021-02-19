@@ -11,8 +11,8 @@ WORKDIR /app
 #Copy files
 COPY . .
 
-#PM2
-Run npm install -g pm2
+#Install PM2
+RUN npm install -g pm2
 
 #Building app
 RUN npm install
