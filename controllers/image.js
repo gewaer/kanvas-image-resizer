@@ -61,7 +61,8 @@ router.get('/*', async (req,res) => {
       ...height && { height },
       ...gravity && { gravity },
       ...strategy && { strategy },
-      position
+      position,
+      fit,
     })
     .toFormat('jpeg')
     .toBuffer();
