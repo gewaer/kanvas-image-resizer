@@ -42,7 +42,6 @@ router.get('/:name', async (req, res) => {
 router.get('/*', async (req,res) => {
   const name = req.url.slice(1);
   const extension = path.extname(name)
-  
   const {
     w = null,
     h = null,
@@ -58,9 +57,10 @@ router.get('/*', async (req,res) => {
   try {
     const originaImageBuffer = await getImage(name);
 
-    if (extension === '.gif') {
+    if (extension.includes('.gif')) {
       res.contentType('image/gif')
       res.end(originaImageBuffer, 'binary');
+      return;
     }
 
     const transformedImage = await sharp(originaImageBuffer)
