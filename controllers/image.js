@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sharp = require('sharp');
+const path = require('path');
 const { getImage } = require('../utils');
 
 router.get('/:name', async (req, res) => {
@@ -39,7 +40,9 @@ router.get('/:name', async (req, res) => {
 })
 
 router.get('/*', async (req,res) => {
-  const name = req.url.slice(1)
+  const name = req.url.slice(1);
+  const extension = path.extname(name)
+  
   const {
     w = null,
     h = null,
@@ -52,9 +55,14 @@ router.get('/*', async (req,res) => {
   const width = w ? Number(w) : undefined;
   const height = h ? Number(h) : undefined;
   
-
   try {
     const originaImageBuffer = await getImage(name);
+
+    if (extension === '.gif') {
+      res.contentType('image/gif')
+      res.end(originaImageBuffer, 'binary');
+    }
+
     const transformedImage = await sharp(originaImageBuffer)
     .resize({
       ...width && { width },
