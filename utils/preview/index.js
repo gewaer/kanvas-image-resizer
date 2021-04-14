@@ -1,6 +1,14 @@
 const axios = require('axios').default;
 const cheerio = require('cheerio');
 const URL = require('url');
+
+const fixUrlProtocol = (url) => {
+  const parsed = URL.parse(url);
+  if (!parsed.protocol) {
+    return `http://${url.replace('//', '')}`
+  }
+  return url;
+}
 const getWebSiteInfo = async (url) => {
   if(url) {
     try {
@@ -30,12 +38,14 @@ const getWebSiteInfo = async (url) => {
         }    
       }
 
+      const imageUrl = fixUrlProtocol(image || twitterImage || defaultImageUrl)
+
       const response = {
         originalUrl: originalUrl || twitterUrl,
         title: title || twitterTitle || titleNode ,
         description: description || twitterDescription,
         image: {
-          url: image || twitterImage || defaultImageUrl,
+          url: imageUrl,
           width: imageWidth,
           height: imageHeight,
         }
