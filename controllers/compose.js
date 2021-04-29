@@ -7,13 +7,12 @@ const convertParamsToArray = (param) => (
 
 router.get('/',async (req, res) => {
   const { query } = req;
-  const { img, alt } = query;
-
+  const { img, alt, w, h, bgColor } = query;
   const imgs = convertParamsToArray(img);
   const alts = convertParamsToArray(alt);
   
   try {
-    const imageBuffer = await composeImage(imgs, alts);
+    const imageBuffer = await composeImage(imgs, alts, w, h, bgColor);
     res.contentType('image/jpeg');
     res.end(imageBuffer, 'binary');
   } catch(e) {

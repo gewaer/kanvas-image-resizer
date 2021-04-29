@@ -52,15 +52,13 @@ const capital = (text) => (
 );
 
 
-
-const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#262628') => {
+const composeImage = (imgs, alts, width = 1334, height = 1000, backgroundColor='#1c1c1e') => {
   return new Promise(async (resolve, reject) => {
 
-   
-
     if (Array.isArray(imgs) && Array.isArray(alts) ) {
-      if (imgs.length === alts.length) {
-        const perImageWidth = width / imgs.length;
+      if (imgs.length) {
+        
+        const perImageWidth = width / 2;
         const canvas = createCanvas(width, height);
         const context = canvas.getContext('2d');  
         context.fillStyle = backgroundColor;
@@ -102,14 +100,17 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
               }).toFile(tempFile)
               const image = await loadImage(tempFile);
               context.drawImage(image, cellX, y, perImageWidth, height)
+              
 
             } catch (e) {
-              writeText(alts[index])
+              // sjmancebo - Temporary commented as now we dont need to render text
+              // writeText(alts[index])
             }
             // const editImage = await sharp(image)
             // console.log(editImage);
           } else {
-            writeText(alts[index])
+            // sjmancebo - Temporary commented as now we dont need to render text
+            // writeText(alts[index])
             // const text = capitalize(alts[index].replace(/\-/g,' '));
             // context.font = "bold 25pt Menlo";
             // context.textAlign = 'left';
@@ -125,7 +126,7 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
           
           cellX = perImageWidth * (index + 1);
           if (index < imgs.length - 1 ) {
-            context.fillStyle = '#232324';
+            context.fillStyle = backgroundColor;
             context.fillRect(cellX, 0, GAP, height);
             cellX += GAP;
           }
@@ -133,10 +134,6 @@ const composeImage = (imgs, alts, width = 667, height = 500, backgroundColor='#2
    
         const buffer = canvas.toBuffer("image/jpeg");
         resolve(buffer);
-  
-  
-      } else {
-        reject(new Error('img and alt length should be the same'))
       }
     }
   })
