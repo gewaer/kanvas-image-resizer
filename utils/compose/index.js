@@ -56,6 +56,7 @@ const composeImage = (imgs, alts, width = 1334, height = 1000, backgroundColor='
   return new Promise(async (resolve, reject) => {
 
     if (Array.isArray(imgs) && Array.isArray(alts) ) {
+      
       if (imgs.length) {
         
         const perImageWidth = width / 2;
@@ -109,6 +110,10 @@ const composeImage = (imgs, alts, width = 1334, height = 1000, backgroundColor='
             // const editImage = await sharp(image)
             // console.log(editImage);
           } else {
+            // Draw the Gap if no image is supplied
+            context.fillStyle = "#000";
+            context.fillRect(width / 2, 0, GAP, height);
+            cellX += GAP;
             // sjmancebo - Temporary commented as now we dont need to render text
             // writeText(alts[index])
             // const text = capitalize(alts[index].replace(/\-/g,' '));
@@ -126,7 +131,7 @@ const composeImage = (imgs, alts, width = 1334, height = 1000, backgroundColor='
           
           cellX = perImageWidth * (index + 1);
           if (index < imgs.length - 1 ) {
-            context.fillStyle = backgroundColor;
+            context.fillStyle = "#000";
             context.fillRect(cellX, 0, GAP, height);
             cellX += GAP;
           }
