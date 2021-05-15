@@ -1,0 +1,75 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: memod-resizer-staging-ingress
+  namespace: staging
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.org/client-max-body-size: 20M
+    nginx.ingress.kubernetes.io/proxy-body-size: 20M
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/limit-connections: '300'
+    nginx.ingress.kubernetes.io/limit-rps: '900'
+    nginx.ingress.kubernetes.io/limit-rpm: '2700'
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "x-powered-by: Memo'd";
+      modsecurity_rules '
+        SecRuleEngine On';
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  tls:
+    - hosts:
+        -  stg-resizer.memodapp.com
+      secretName: letsencrypt-memod-resizer-stg
+  rules:
+    - host: stg-resizer.memodapp.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: memod-resizer
+              servicePort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: memod-resizer
+    namespace: staging
+spec:
+  selector:
+    app: memod-resizer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: memod-resizer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: memod-resizer
+    namespace: staging
+    labels:
+        app: memod-resizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memod-resizer
+  template:
+    metadata:
+      labels:
+        app: memod-resizer
+    spec:
+     containers:
+        - image: 346494590871.dkr.ecr.us-east-2.amazonaws.com/memod-resizer-stg
+          name: memod-resizer
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
