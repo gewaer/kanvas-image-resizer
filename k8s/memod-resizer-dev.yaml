@@ -17,9 +17,7 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "x-powered-by: Memo'd";
       modsecurity_rules '
-        SecRuleEngine On
-      ';
-      more_set_headers "Content-Security-Policy-Report-Only: Content-Security-Policy: default-src *  data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval' 'unsafe-dynamic'; script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src * data: blob: 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src * data: blob: ; style-src * data: blob: 'unsafe-inline'; font-src * data: blob: 'unsafe-inline';";
+      SecRuleEngine On';
     cert-manager.io/cluster-issuer: "letsencrypt-development"
 spec:
   tls:
@@ -70,7 +68,7 @@ spec:
         app: memod-resizer
     spec:
      containers:
-        - image: 851271686936.dkr.ecr.us-east-2.amazonaws.com/memod-resizer-dev
+        - image: 346494590871.dkr.ecr.us-east-2.amazonaws.com/memod-resizer-dev
           name: memod-resizer
           imagePullPolicy: Always
           ports:
