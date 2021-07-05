@@ -15,7 +15,7 @@ const fixUrlProtocol = (url) => {
 
 const fixFavicon = (url, domain) => {
   if (url) {
-    const parsed = new URL.URL(url, domain)
+    const parsed = new URL.URL(fixUrlProtocol(url), domain)
     return parsed.href;
   }
   return '';
